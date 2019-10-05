@@ -154,9 +154,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\function.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\function.h" />
     <ClInclude Include="src\vsrc.h" />
     <ClInclude Include="src\fsrc.h" />
   </ItemGroup>
