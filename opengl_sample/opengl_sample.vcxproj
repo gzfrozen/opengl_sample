@@ -159,8 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\function.h" />
-    <ClInclude Include="src\vsrc.h" />
-    <ClInclude Include="src\fsrc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

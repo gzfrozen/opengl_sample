@@ -4,8 +4,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "function.h"
-#include "vsrc.h"
-#include "fsrc.h"
 
 int main()
 {
@@ -53,7 +51,7 @@ int main()
 	//glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
 	// プログラムオブジェクトを作成する
-	const GLuint program(createProgram(vsrc, fsrc));
+	const GLuint program(loadProgram("shaders/point.vert", "shaders/point.frag"));
 
 	// ウィンドウが開いている間繰り返す
 	while (glfwWindowShouldClose(window) == GL_FALSE)

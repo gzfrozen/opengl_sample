@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <GL/glew.h>
 #include "function.h"
@@ -51,6 +52,56 @@ GLuint createProgram(const char* vsrc, const char* fsrc)
 	return 0;
 }
 
+// シェーダのソースファイルを読み込んだメモリを返す
+// name: シェーダのソースファイル名
+// buffer: 読み込んだソースファイルのテキスト
+bool readShaderSource(const char* name, std::vector<GLchar>& buffer)
+{
+	// ファイル名が NULL だった
+	if (name == NULL) return false;
+	// ソースファイルを開く
+	std::ifstream file(name, std::ios::binary);
+	if (file.fail())
+	{
+		// 開けなかった
+		std::cerr << "Error: Can't open source file: " << name << std::endl;
+		return false;
+	}
+	// ファイルの末尾に移動し現在位置（＝ファイルサイズ）を得る
+	file.seekg(0L, std::ios::end);
+	GLsizei length = static_cast<GLsizei>(file.tellg());
+	// ファイルサイズのメモリを確保
+	buffer.resize(length + 1);
+	// ファイルを先頭から読み込む
+	file.seekg(0L, std::ios::beg);
+	file.read(buffer.data(), length);
+	buffer[length] = '\0';
+	if (file.fail())
+	{
+		// うまく読み込めなかった
+		std::cerr << "Error: Could not read souce file: " << name << std::endl;
+		file.close();
+		return false;
+	}
+	// 読み込み成功
+	file.close();
+	return true;
+}
+
+// シェーダのソースファイルを読み込んでプログラムオブジェクトを作成する
+// vert: バーテックスシェーダのソースファイル名
+// frag: フラグメントシェーダのソースファイル名
+GLuint loadProgram(const char* vert, const char* frag)
+{
+	// シェーダのソースファイルを読み込む
+	std::vector<GLchar> vsrc;
+	const bool vstat(readShaderSource(vert, vsrc));
+	std::vector<GLchar> fsrc;
+	const bool fstat(readShaderSource(frag, fsrc));
+	// プログラムオブジェクトを作成する
+	return vstat && fstat ? createProgram(vsrc.data(), fsrc.data()) : 0;
+}
+
 // シェーダオブジェクトのコンパイル結果を表示する
 // shader: シェーダオブジェクト名
 // str: コンパイルエラーが発生した場所を示す文字列
@@ -95,3 +146,4 @@ GLboolean printProgramInfoLog(GLuint program)
 	}
 	return static_cast<GLboolean>(status);
 }
+
