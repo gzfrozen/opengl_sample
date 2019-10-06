@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <iostream>
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 int main()
 {
@@ -34,12 +33,12 @@ int main()
 	glfwMakeContextCurrent(window);
 
 	// GLEW を初期化する
-	if (glewInit() != GLEW_OK)
-	{
-		// GLEW の初期化に失敗した
-		std::cerr << "Can't initialize GLEW" << std::endl;
-		return 1;
-	}
+	//if (glewInit() != GLEW_OK)
+	//{
+	//	// GLEW の初期化に失敗した
+	//	std::cerr << "Can't initialize GLEW" << std::endl;
+	//	return 1;
+	//}
 
 	// 垂直同期のタイミングを待つ
 	glfwSwapInterval(1);
