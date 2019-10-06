@@ -26,5 +26,19 @@
     <ClInclude Include="src\function.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\object.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shape.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\point.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="src\shaders\point.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
