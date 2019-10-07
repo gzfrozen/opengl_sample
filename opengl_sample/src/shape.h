@@ -34,6 +34,6 @@ public:
 	virtual void execute() const
 	{
 		// Ü‚êü‚Å•`‰æ‚·‚é
-		glDrawArrays(GL_LINE_LOOP, 0, vertexcount);
+		glDrawArrays(GL_TRIANGLES, 0, vertexcount);
 	}
 };
