@@ -10,10 +10,9 @@
 // 矩形の頂点の位置
 constexpr Object::Vertex triangleVertex[] =
 {
-	{ 0.0f, 1.0f },
-	{ -1.0f, -1.0f },
-	{ 1.0f, -1.0f }
-
+	{ 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f },
+	{ -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f },
+	{ 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f }
 };
 
 int main()
@@ -65,7 +64,7 @@ int main()
 	const GLuint program(loadProgram("shaders/point.vert", "shaders/point.frag"));
 
 	// 図形データを作成する
-	std::unique_ptr<const Shape> shape(new Shape(2, 4, triangleVertex));
+	std::unique_ptr<const Shape> shape(new Shape(2, 3, triangleVertex));
 
 	// ウィンドウが開いている間繰り返す
 	while (glfwWindowShouldClose(window) == GL_FALSE)
