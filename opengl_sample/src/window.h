@@ -8,6 +8,10 @@ class Window
 {
 	// ウィンドウのハンドル
 	GLFWwindow* const window;
+
+	// 縦横比
+	GLfloat aspect;
+
 public:
 	// コンストラクタ
 	Window(int width = 640, int height = 480, const char* title = "Hello!");
@@ -33,10 +37,9 @@ public:
 		glfwWaitEvents();
 	}
 
+	// 縦横比を取り出す
+	GLfloat getAspect() const { return aspect; }
+
 	// ウィンドウのサイズ変更時の処理
-	static void resize(GLFWwindow* const window, int width, int height)
-	{
-		// ウィンドウ全体をビューポートに設定する
-		glViewport(0, 0, width, height);
-	}
+	static void resize(GLFWwindow* const window, int width, int height);
 };
