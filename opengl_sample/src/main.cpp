@@ -45,7 +45,8 @@ int main()
 	const GLuint program(loadProgram("shaders/point.vert", "shaders/point.frag"));
 
 	// uniform 変数の場所を取得する
-	const GLint aspectLoc(glGetUniformLocation(program, "aspect"));
+	const GLint sizeLoc(glGetUniformLocation(program, "size"));
+	const GLint scaleLoc(glGetUniformLocation(program, "scale"));
 
 	// 図形データを作成する
 	std::unique_ptr<const Shape> shape(new Shape(2, 3, triangleVertex));
@@ -60,7 +61,8 @@ int main()
 		glUseProgram(program);
 
 		// uniform 変数に値を設定する
-		glUniform1f(aspectLoc, window.getAspect());
+		glUniform2fv(sizeLoc, 1, window.getSize());
+		glUniform1f(scaleLoc, window.getScale());
 
 		//
 

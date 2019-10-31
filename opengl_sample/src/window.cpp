@@ -5,6 +5,7 @@
 
 Window::Window(int width, int height, const char* title)
 	: window(glfwCreateWindow(width, height, title, NULL, NULL))
+	, scale(100.f)
 {
 	if (window == NULL)
 	{
@@ -44,8 +45,8 @@ void Window::resize(GLFWwindow* const window, int width, int height)
 		instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
 	if (instance != NULL)
 	{
-		// このインスタンスが保持する縦横比を更新する
-		instance->aspect =
-			static_cast<GLfloat>(width) / static_cast<GLfloat>(height);
+		// 開いたウィンドウのサイズを保存する
+		instance->size[0] = static_cast<GLfloat>(width);
+		instance->size[1] = static_cast<GLfloat>(height);
 	}
 }

@@ -9,8 +9,11 @@ class Window
 	// ウィンドウのハンドル
 	GLFWwindow* const window;
 
-	// 縦横比
-	GLfloat aspect;
+	// ウィンドウのサイズ
+	GLfloat size[2];
+
+	// ワールド座標系に対するデバイス座標系の拡大率
+	GLfloat scale;
 
 public:
 	// コンストラクタ
@@ -37,8 +40,11 @@ public:
 		glfwWaitEvents();
 	}
 
-	// 縦横比を取り出す
-	GLfloat getAspect() const { return aspect; }
+	// ウィンドウのサイズを取り出す
+	const GLfloat* getSize() const { return size; }
+
+	// ワールド座標系に対するデバイス座標系の拡大率を取り出す
+	GLfloat getScale() const { return scale; }
 
 	// ウィンドウのサイズ変更時の処理
 	static void resize(GLFWwindow* const window, int width, int height);
