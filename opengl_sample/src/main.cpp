@@ -44,6 +44,9 @@ int main()
 	// プログラムオブジェクトを作成する
 	const GLuint program(loadProgram("shaders/point.vert", "shaders/point.frag"));
 
+	// uniform 変数の場所を取得する
+	const GLint aspectLoc(glGetUniformLocation(program, "aspect"));
+
 	// 図形データを作成する
 	std::unique_ptr<const Shape> shape(new Shape(2, 3, triangleVertex));
 
@@ -55,6 +58,10 @@ int main()
 
 		// シェーダプログラムの使用開始
 		glUseProgram(program);
+
+		// uniform 変数に値を設定する
+		glUniform1f(aspectLoc, window.getAspect());
+
 		//
 
 		// ここで描画処理を行う
