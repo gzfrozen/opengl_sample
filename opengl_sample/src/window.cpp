@@ -31,24 +31,11 @@ Window::Window(int width, int height, const char* title)
 	// ウィンドウのサイズ変更時に呼び出す処理の登録
 	glfwSetWindowSizeCallback(window, resize);
 
+	// マウスホイール操作時に呼び出す処理の登録
+	glfwSetScrollCallback(window, wheel);
+
 	// 開いたウィンドウの初期設定
 	resize(window, width, height);
-}
-
-void Window::resize(GLFWwindow* const window, int width, int height)
-{
-	// ウィンドウ全体をビューポートに設定する
-	glViewport(0, 0, width, height);
-
-	// このインスタンスの this ポインタを得る
-	Window* const
-		instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
-	if (instance != NULL)
-	{
-		// 開いたウィンドウのサイズを保存する
-		instance->size[0] = static_cast<GLfloat>(width);
-		instance->size[1] = static_cast<GLfloat>(height);
-	}
 }
 
 void Window::swapBuffers()
@@ -57,10 +44,40 @@ void Window::swapBuffers()
 	glfwSwapBuffers(window);
 	// イベントを取り出す
 	glfwWaitEvents();
-	// マウスカーソルの位置を取得する
-	double x, y;
-	glfwGetCursorPos(window, &x, &y);
-	// マウスカーソルの正規化デバイス座標系上での位置を求める
-	location[0] = static_cast<GLfloat>(x) * 2.0f / size[0] - 1.0f;
-	location[1] = 1.0f - static_cast<GLfloat>(y) * 2.0f / size[1];
+
+	// マウスの左ボタンの状態を調べる
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) != GLFW_RELEASE) {
+		// マウスの左ボタンが押されていたらマウスカーソルの位置を取得する
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+		// マウスカーソルの正規化デバイス座標系上での位置を求める
+		location[0] = static_cast<GLfloat>(x) * 2.0f / size[0] - 1.0f;
+		location[1] = 1.0f - static_cast<GLfloat>(y) * 2.0f / size[1];
+	}
+}
+
+void Window::resize(GLFWwindow* const window, int width, int height)
+{
+	// ウィンドウ全体をビューポートに設定する
+	glViewport(0, 0, width, height);
+
+	// このインスタンスの this ポインタを得る
+	Window* const instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
+	if (instance != NULL)
+	{
+		// 開いたウィンドウのサイズを保存する
+		instance->size[0] = static_cast<GLfloat>(width);
+		instance->size[1] = static_cast<GLfloat>(height);
+	}
+}
+
+void Window::wheel(GLFWwindow* window, double x, double y)
+{
+	// このインスタンスの this ポインタを得る
+	Window* const instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
+	if (instance != NULL)
+	{
+		// ワールド座標系に対するデバイス座標系の拡大率を更新する
+		instance->scale += static_cast<GLfloat>(y) * 2.0f;
+	}
 }

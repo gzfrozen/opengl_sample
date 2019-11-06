@@ -48,4 +48,7 @@ public:
 
 	// ウィンドウのサイズ変更時の処理
 	static void resize(GLFWwindow* const window, int width, int height);
+
+	// マウスホイール操作時の処理
+	static void wheel(GLFWwindow* window, double x, double y);
 };
