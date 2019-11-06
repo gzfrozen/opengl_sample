@@ -18,6 +18,9 @@ class Window
 	// 図形の正規化デバイス座標系上での位置
 	GLfloat location[2];
 
+	// キーボードの状態
+	int keyStatus;
+
 public:
 	// コンストラクタ
 	Window(int width = 640, int height = 480, const char* title = "Hello!");
@@ -31,7 +34,7 @@ public:
 	// ウィンドウを閉じるべきかを判定する
 	int shouldClose() const
 	{
-		return glfwWindowShouldClose(window);
+		return glfwWindowShouldClose(window) || glfwGetKey(window, GLFW_KEY_ESCAPE);
 	}
 
 	// カラーバッファを入れ替えてイベントを取り出す
@@ -51,4 +54,7 @@ public:
 
 	// マウスホイール操作時の処理
 	static void wheel(GLFWwindow* window, double x, double y);
+
+	// キーボード操作時の処理
+	static void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods);
 };

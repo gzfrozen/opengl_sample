@@ -5,7 +5,7 @@
 
 Window::Window(int width, int height, const char* title)
 	: window(glfwCreateWindow(width, height, title, NULL, NULL))
-	, scale(100.f), location{ 0,0 }
+	, scale(100.f), location{ 0,0 }, keyStatus(GLFW_RELEASE)
 {
 	if (window == NULL)
 	{
@@ -34,6 +34,9 @@ Window::Window(int width, int height, const char* title)
 	// マウスホイール操作時に呼び出す処理の登録
 	glfwSetScrollCallback(window, wheel);
 
+	// キーボード操作時に呼び出す処理の登録
+	glfwSetKeyCallback(window, keyboard);
+
 	// 開いたウィンドウの初期設定
 	resize(window, width, height);
 }
@@ -42,8 +45,22 @@ void Window::swapBuffers()
 {
 	// カラーバッファを入れ替える
 	glfwSwapBuffers(window);
+
 	// イベントを取り出す
-	glfwWaitEvents();
+	if (keyStatus == GLFW_RELEASE)
+		glfwWaitEvents();
+	else
+		glfwPollEvents();
+
+	// キーボードの状態を調べる
+	if (glfwGetKey(window, GLFW_KEY_LEFT) != GLFW_RELEASE)
+		location[0] -= 2.0f / size[0];
+	else if (glfwGetKey(window, GLFW_KEY_RIGHT) != GLFW_RELEASE)
+		location[0] += 2.0f / size[0];
+	if (glfwGetKey(window, GLFW_KEY_DOWN) != GLFW_RELEASE)
+		location[1] -= 2.0f / size[1];
+	else if (glfwGetKey(window, GLFW_KEY_UP) != GLFW_RELEASE)
+		location[1] += 2.0f / size[1];
 
 	// マウスの左ボタンの状態を調べる
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) != GLFW_RELEASE) {
@@ -79,5 +96,16 @@ void Window::wheel(GLFWwindow* window, double x, double y)
 	{
 		// ワールド座標系に対するデバイス座標系の拡大率を更新する
 		instance->scale += static_cast<GLfloat>(y) * 2.0f;
+	}
+}
+
+void Window::keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	// このインスタンスの this ポインタを得る
+	Window* const instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
+	if (instance != NULL)
+	{
+		// キーの状態を保存する
+		instance->keyStatus = action;
 	}
 }
