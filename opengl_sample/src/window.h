@@ -15,6 +15,9 @@ class Window
 	// ワールド座標系に対するデバイス座標系の拡大率
 	GLfloat scale;
 
+	// 図形の正規化デバイス座標系上での位置
+	GLfloat location[2];
+
 public:
 	// コンストラクタ
 	Window(int width = 640, int height = 480, const char* title = "Hello!");
@@ -32,19 +35,16 @@ public:
 	}
 
 	// カラーバッファを入れ替えてイベントを取り出す
-	void swapBuffers()
-	{
-		// カラーバッファを入れ替える
-		glfwSwapBuffers(window);
-		// イベントを取り出す
-		glfwWaitEvents();
-	}
+	void swapBuffers();
 
 	// ウィンドウのサイズを取り出す
 	const GLfloat* getSize() const { return size; }
 
 	// ワールド座標系に対するデバイス座標系の拡大率を取り出す
 	GLfloat getScale() const { return scale; }
+
+	// 位置を取り出す
+	const GLfloat* getLocation() const { return location; }
 
 	// ウィンドウのサイズ変更時の処理
 	static void resize(GLFWwindow* const window, int width, int height);

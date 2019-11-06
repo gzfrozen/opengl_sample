@@ -47,6 +47,7 @@ int main()
 	// uniform 変数の場所を取得する
 	const GLint sizeLoc(glGetUniformLocation(program, "size"));
 	const GLint scaleLoc(glGetUniformLocation(program, "scale"));
+	const GLint locationLoc(glGetUniformLocation(program, "location"));
 
 	// 図形データを作成する
 	std::unique_ptr<const Shape> shape(new Shape(2, 3, triangleVertex));
@@ -63,6 +64,7 @@ int main()
 		// uniform 変数に値を設定する
 		glUniform2fv(sizeLoc, 1, window.getSize());
 		glUniform1f(scaleLoc, window.getScale());
+		glUniform2fv(locationLoc, 1, window.getLocation());
 
 		//
 

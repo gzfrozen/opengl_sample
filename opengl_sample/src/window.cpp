@@ -5,7 +5,7 @@
 
 Window::Window(int width, int height, const char* title)
 	: window(glfwCreateWindow(width, height, title, NULL, NULL))
-	, scale(100.f)
+	, scale(100.f), location{ 0,0 }
 {
 	if (window == NULL)
 	{
@@ -49,4 +49,18 @@ void Window::resize(GLFWwindow* const window, int width, int height)
 		instance->size[0] = static_cast<GLfloat>(width);
 		instance->size[1] = static_cast<GLfloat>(height);
 	}
+}
+
+void Window::swapBuffers()
+{
+	// カラーバッファを入れ替える
+	glfwSwapBuffers(window);
+	// イベントを取り出す
+	glfwWaitEvents();
+	// マウスカーソルの位置を取得する
+	double x, y;
+	glfwGetCursorPos(window, &x, &y);
+	// マウスカーソルの正規化デバイス座標系上での位置を求める
+	location[0] = static_cast<GLfloat>(x) * 2.0f / size[0] - 1.0f;
+	location[1] = 1.0f - static_cast<GLfloat>(y) * 2.0f / size[1];
 }
