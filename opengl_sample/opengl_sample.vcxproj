@@ -156,10 +156,12 @@
   <ItemGroup>
     <ClCompile Include="src\function.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\matrix.cpp" />
     <ClCompile Include="src\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\function.h" />
+    <ClInclude Include="src\matrix.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\shape.h" />
     <ClInclude Include="src\window.h" />
