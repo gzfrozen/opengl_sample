@@ -1,5 +1,4 @@
-* linguist-vendored
-*.cpp linguist-vendored=false
+opengl_sample\src\* linguist-vendored
 
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
